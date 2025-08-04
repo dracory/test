@@ -1,5 +1,7 @@
 # Testing Utilities
 
+![tests](https://github.com/dracory/test/workflows/tests/badge.svg)
+
 This package provides a set of utilities for testing Go applications in the Dracory ecosystem. It includes tools for setting up test environments, managing test databases, and testing HTTP endpoints.
 
 ## Key Components
