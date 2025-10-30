@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/glebarez/sqlite"
 )
 
 // DBConfig contains configuration for test database
