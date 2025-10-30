@@ -3,8 +3,6 @@ package test
 import (
 	"database/sql"
 	"fmt"
-
-	_ "github.com/glebarez/sqlite"
 )
 
 // DBConfig contains configuration for test database
@@ -17,7 +15,10 @@ type DBConfig struct {
 	Password string
 }
 
-// DefaultDBConfig returns a default SQLite in-memory database configuration
+// DefaultDBConfig returns a default SQLite in-memory database configuration.
+// To use the default SQLite driver, ensure you import a compatible driver
+// package (for example, via a blank import in your test setup) before calling
+// NewTestDB.
 func DefaultDBConfig() *DBConfig {
 	return &DBConfig{
 		Driver:   "sqlite",
@@ -30,6 +31,14 @@ func DefaultDBConfig() *DBConfig {
 func NewTestDB(config *DBConfig) (*sql.DB, error) {
 	if config == nil {
 		config = DefaultDBConfig()
+	}
+
+	if config.Driver == "" {
+		return nil, fmt.Errorf("database driver must be provided")
+	}
+
+	if !driverRegistered(config.Driver) {
+		return nil, fmt.Errorf("database driver %q is not registered. Import the driver package (e.g. _ \"github.com/glebarez/sqlite\") or configure a different driver before creating the test database", config.Driver)
 	}
 
 	var dsn string
@@ -58,6 +67,15 @@ func NewTestDB(config *DBConfig) (*sql.DB, error) {
 	}
 
 	return db, nil
+}
+
+func driverRegistered(name string) bool {
+	for _, driver := range sql.Drivers() {
+		if driver == name {
+			return true
+		}
+	}
+	return false
 }
 
 // CloseTestDB safely closes a test database connection

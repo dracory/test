@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 	"testing"
+
+	_ "github.com/glebarez/sqlite"
 )
 
 func TestTestKey(t *testing.T) {
