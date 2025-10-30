@@ -25,6 +25,8 @@ The `test_db.go` file provides utilities for setting up and managing test databa
 - `CreateTestTable()`: Creates test tables in the database
 - `DropTestTable()`: Drops test tables from the database
 
+> **Note:** `NewTestDB` requires the selected SQL driver to be registered. When using the default SQLite configuration, add a blank import for a compatible SQLite driver (for example, `_ "github.com/glebarez/sqlite"`) in your test code or main package.
+
 ### Test HTTP
 
 The `test_http.go` file provides utilities for testing HTTP endpoints:
@@ -46,7 +48,8 @@ The `test_key.go` file provides a utility for generating test keys:
 ```go
 import (
     "testing"
-    "github.com/dracory/base/test"
+
+    testutils "github.com/dracory/test"
 )
 
 func TestSomething(t *testing.T) {
@@ -69,7 +72,9 @@ func TestSomething(t *testing.T) {
 ```go
 import (
     "testing"
-    "github.com/dracory/base/test"
+
+    _ "github.com/glebarez/sqlite"
+    testutils "github.com/dracory/test"
 )
 
 func TestWithDatabase(t *testing.T) {
@@ -102,7 +107,8 @@ func TestWithDatabase(t *testing.T) {
 import (
     "net/http"
     "testing"
-    "github.com/dracory/base/test"
+
+    testutils "github.com/dracory/test"
 )
 
 func TestHTTPEndpoint(t *testing.T) {
@@ -113,8 +119,8 @@ func TestHTTPEndpoint(t *testing.T) {
     })
 
     // Create a request
-    req := test.NewTestHTTPRequest("GET", "/hello")
-        .WithHeader("X-Test", "test-value")
+    req := testutils.NewTestHTTPRequest("GET", "/hello").
+        WithHeader("X-Test", "test-value")
 
     // Execute the request
     resp := req.Execute(handler)
