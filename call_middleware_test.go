@@ -54,4 +54,7 @@ func TestCallMiddleware(t *testing.T) {
 	if resp.Header.Get("X-Test-Middleware") != "true" {
 		t.Errorf("Expected X-Test-Middleware header to be set")
 	}
+	if body != "Middleware test" {
+		t.Errorf("Expected body %q, got %q", "Middleware test", body)
+	}
 }

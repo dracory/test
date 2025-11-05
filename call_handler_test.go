@@ -35,6 +35,9 @@ func TestCallEndpoint(t *testing.T) {
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status code %d, got %d", http.StatusOK, resp.StatusCode)
 	}
+	if body != "Hello, World!" {
+		t.Errorf("Expected body %q, got %q", "Hello, World!", body)
+	}
 
 	// Test with custom headers
 	body, resp, err = CallEndpoint("GET", handler, NewRequestOptions{
@@ -47,6 +50,9 @@ func TestCallEndpoint(t *testing.T) {
 	}
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status code %d, got %d", http.StatusOK, resp.StatusCode)
+	}
+	if body != "Hello, World!" {
+		t.Errorf("Expected body %q, got %q", "Hello, World!", body)
 	}
 }
 
@@ -79,6 +85,9 @@ func TestCallStringEndpoint(t *testing.T) {
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status code %d, got %d", http.StatusOK, resp.StatusCode)
 	}
+	if body != "Hello, String World!" {
+		t.Errorf("Expected body %q, got %q", "Hello, String World!", body)
+	}
 
 	// Test with custom headers
 	body, resp, err = CallStringEndpoint("GET", handler, NewRequestOptions{
@@ -91,6 +100,9 @@ func TestCallStringEndpoint(t *testing.T) {
 	}
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected status code %d, got %d", http.StatusOK, resp.StatusCode)
+	}
+	if body != "Hello, String World!" {
+		t.Errorf("Expected body %q, got %q", "Hello, String World!", body)
 	}
 }
 

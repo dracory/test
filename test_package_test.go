@@ -252,6 +252,9 @@ func TestTestHTTPServer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Get failed: %v", err)
 	}
+	if resp == nil {
+		t.Fatalf("resp is nil")
+	}
 	defer resp.Body.Close()
 	body, _ := io.ReadAll(resp.Body)
 	if string(body) != "Hello from test server" {
@@ -262,6 +265,9 @@ func TestTestHTTPServer(t *testing.T) {
 	resp, err = server.Post("/", "text/plain", strings.NewReader("Test post"))
 	if err != nil {
 		t.Fatalf("Post failed: %v", err)
+	}
+	if resp == nil {
+		t.Fatalf("resp is nil")
 	}
 	defer resp.Body.Close()
 	body, _ = io.ReadAll(resp.Body)
@@ -274,6 +280,9 @@ func TestTestHTTPServer(t *testing.T) {
 	resp, err = server.Do(req)
 	if err != nil {
 		t.Fatalf("Do failed: %v", err)
+	}
+	if resp == nil {
+		t.Fatalf("resp is nil")
 	}
 	defer resp.Body.Close()
 	body, _ = io.ReadAll(resp.Body)
