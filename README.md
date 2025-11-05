@@ -25,7 +25,7 @@ The `test_db.go` file provides utilities for setting up and managing test databa
 - `CreateTestTable()`: Creates test tables in the database
 - `DropTestTable()`: Drops test tables from the database
 
-> **Note:** `NewTestDB` requires the selected SQL driver to be registered. When using the default SQLite configuration, add a blank import for a compatible SQLite driver (for example, `_ "github.com/glebarez/sqlite"`) in your test code or main package.
+> **Note:** `NewTestDB` requires the selected SQL driver to be registered. When using the default SQLite configuration, add a blank import for a compatible SQLite driver (for example, `_ "modernc.org/sqlite"`) in your test code or main package.
 
 ### Test HTTP
 
@@ -73,7 +73,7 @@ func TestSomething(t *testing.T) {
 import (
     "testing"
 
-    _ "github.com/glebarez/sqlite"
+    _ "modernc.org/sqlite"
     testutils "github.com/dracory/test"
 )
 

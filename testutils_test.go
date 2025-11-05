@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	_ "github.com/glebarez/sqlite"
+	_ "modernc.org/sqlite"
 )
 
 func TestTestKey(t *testing.T) {

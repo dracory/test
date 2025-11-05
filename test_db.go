@@ -38,7 +38,7 @@ func NewTestDB(config *DBConfig) (*sql.DB, error) {
 	}
 
 	if !driverRegistered(config.Driver) {
-		return nil, fmt.Errorf("database driver %q is not registered. Import the driver package (e.g. _ \"github.com/glebarez/sqlite\") or configure a different driver before creating the test database", config.Driver)
+		return nil, fmt.Errorf("database driver %q is not registered. Import the driver package (e.g. _ \"modernc.org/sqlite\") or configure a different driver before creating the test database", config.Driver)
 	}
 
 	var dsn string

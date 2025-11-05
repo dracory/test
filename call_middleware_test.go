@@ -1,8 +1,10 @@
-package test
+package test_test
 
 import (
 	"net/http"
 	"testing"
+
+	"github.com/dracory/test"
 )
 
 // TestCallMiddleware tests the CallMiddleware function
@@ -22,7 +24,7 @@ func TestCallMiddleware(t *testing.T) {
 	}
 
 	// Test with default options
-	body, resp, err := CallMiddleware("GET", middleware, handler, NewRequestOptions{})
+	body, resp, err := test.CallMiddleware("GET", middleware, handler, test.NewRequestOptions{})
 	if err != nil {
 		t.Fatalf("CallMiddleware failed: %v", err)
 	}
@@ -37,7 +39,7 @@ func TestCallMiddleware(t *testing.T) {
 	}
 
 	// Test with custom options
-	body, resp, err = CallMiddleware("POST", middleware, handler, NewRequestOptions{
+	body, resp, err = test.CallMiddleware("POST", middleware, handler, test.NewRequestOptions{
 		Body: "Custom body",
 		Headers: map[string]string{
 			"X-Test-Header": "test-value",

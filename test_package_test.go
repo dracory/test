@@ -1,4 +1,4 @@
-package test
+package test_test
 
 import (
 	"fmt"
@@ -7,12 +7,14 @@ import (
 	"net/url"
 	"strings"
 	"testing"
+
+	"github.com/dracory/test"
 )
 
 // TestNewRequest tests the NewRequest function
 func TestNewRequest(t *testing.T) {
 	// Test with minimal options
-	req, err := NewRequest("GET", "/test", NewRequestOptions{})
+	req, err := test.NewRequest("GET", "/test", test.NewRequestOptions{})
 	if err != nil {
 		t.Fatalf("NewRequest failed: %v", err)
 	}
@@ -27,7 +29,7 @@ func TestNewRequest(t *testing.T) {
 	}
 
 	// Test with empty URL (should default to "/")
-	req, err = NewRequest("GET", "", NewRequestOptions{})
+	req, err = test.NewRequest("GET", "", test.NewRequestOptions{})
 	if err != nil {
 		t.Fatalf("NewRequest failed: %v", err)
 	}
@@ -36,7 +38,7 @@ func TestNewRequest(t *testing.T) {
 	}
 
 	// Test with body
-	req, err = NewRequest("POST", "/test", NewRequestOptions{
+	req, err = test.NewRequest("POST", "/test", test.NewRequestOptions{
 		Body: "Test body",
 	})
 	if err != nil {
@@ -53,7 +55,7 @@ func TestNewRequest(t *testing.T) {
 		Age  int    `json:"age"`
 	}
 	jsonData := TestData{Name: "John", Age: 30}
-	req, err = NewRequest("POST", "/test", NewRequestOptions{
+	req, err = test.NewRequest("POST", "/test", test.NewRequestOptions{
 		JSONData: jsonData,
 	})
 	if err != nil {
@@ -67,7 +69,7 @@ func TestNewRequest(t *testing.T) {
 	formValues := url.Values{}
 	formValues.Set("name", "John")
 	formValues.Set("age", "30")
-	req, err = NewRequest("POST", "/test", NewRequestOptions{
+	req, err = test.NewRequest("POST", "/test", test.NewRequestOptions{
 		FormValues: formValues,
 	})
 	if err != nil {
@@ -81,7 +83,7 @@ func TestNewRequest(t *testing.T) {
 	queryParams := url.Values{}
 	queryParams.Set("q", "search")
 	queryParams.Set("page", "1")
-	req, err = NewRequest("GET", "/test", NewRequestOptions{
+	req, err = test.NewRequest("GET", "/test", test.NewRequestOptions{
 		QueryParams: queryParams,
 	})
 	if err != nil {
@@ -97,7 +99,7 @@ func TestNewRequest(t *testing.T) {
 		"X-Test-Header": "test",
 		"Authorization": "Bearer token",
 	}
-	req, err = NewRequest("GET", "/test", NewRequestOptions{
+	req, err = test.NewRequest("GET", "/test", test.NewRequestOptions{
 		Headers: headers,
 	})
 	if err != nil {
@@ -116,7 +118,7 @@ func TestNewRequest(t *testing.T) {
 	contextValues := map[any]any{
 		userKey: "testuser",
 	}
-	req, err = NewRequest("GET", "/test", NewRequestOptions{
+	req, err = test.NewRequest("GET", "/test", test.NewRequestOptions{
 		Context: contextValues,
 	})
 	if err != nil {
@@ -127,7 +129,7 @@ func TestNewRequest(t *testing.T) {
 	}
 
 	// Test with explicit content type
-	req, err = NewRequest("POST", "/test", NewRequestOptions{
+	req, err = test.NewRequest("POST", "/test", test.NewRequestOptions{
 		Body:        "Test body",
 		ContentType: "text/plain",
 	})
@@ -141,7 +143,7 @@ func TestNewRequest(t *testing.T) {
 	// Test with deprecated GetValues (should set QueryParams)
 	getValues := url.Values{}
 	getValues.Set("q", "legacy")
-	req, err = NewRequest("GET", "/test", NewRequestOptions{
+	req, err = test.NewRequest("GET", "/test", test.NewRequestOptions{
 		GetValues: getValues,
 	})
 	if err != nil {
@@ -154,7 +156,7 @@ func TestNewRequest(t *testing.T) {
 	// Test with deprecated PostValues (should set FormValues)
 	postValues := url.Values{}
 	postValues.Set("name", "legacy")
-	req, err = NewRequest("POST", "/test", NewRequestOptions{
+	req, err = test.NewRequest("POST", "/test", test.NewRequestOptions{
 		PostValues: postValues,
 	})
 	if err != nil {
@@ -168,7 +170,7 @@ func TestNewRequest(t *testing.T) {
 // TestTestHTTPRequest tests the TestHTTPRequest type and its methods
 func TestTestHTTPRequest(t *testing.T) {
 	// Test NewTestHTTPRequest
-	req := NewTestHTTPRequest("GET", "/test")
+	req := test.NewTestHTTPRequest("GET", "/test")
 	if req.Method != "GET" {
 		t.Errorf("Expected method %q, got %q", "GET", req.Method)
 	}
@@ -236,7 +238,7 @@ func TestTestHTTPServer(t *testing.T) {
 	})
 
 	// Create a test server
-	server := NewTestHTTPServer(handler)
+	server := test.NewTestHTTPServer(handler)
 	defer server.Close()
 
 	// Test URL

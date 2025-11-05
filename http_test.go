@@ -1,15 +1,17 @@
-package test
+package test_test
 
 import (
 	"net/http"
 	"testing"
+
+	"github.com/dracory/test"
 )
 
 // TestStringResponse tests the StringResponse function
 func TestStringResponse(t *testing.T) {
 	// Test with no content type set
-	recorder := NewTestHTTPRequest("GET", "/").Execute(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		StringResponse(w, r, "Test response")
+	recorder := test.NewTestHTTPRequest("GET", "/").Execute(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		test.StringResponse(w, r, "Test response")
 	}))
 
 	if recorder.Code != http.StatusOK {
@@ -24,9 +26,9 @@ func TestStringResponse(t *testing.T) {
 	}
 
 	// Test with content type already set
-	recorder = NewTestHTTPRequest("GET", "/").Execute(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	recorder = test.NewTestHTTPRequest("GET", "/").Execute(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		StringResponse(w, r, "Test response")
+		test.StringResponse(w, r, "Test response")
 	}))
 
 	contentType = recorder.Header().Get("Content-Type")
